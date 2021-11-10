@@ -18,40 +18,40 @@ public class UserService {
         return userRepo.findAll();
     }
 
-    public Flux<UserEntity> customFindAll() {
-        return userRepo.findAllUser();
-    }
-
-    public Flux<UserEntity> customFindAllProjection() {
-        return userRepo.findAllUserProjection();
-    }
+//    public Flux<UserEntity> customFindAll() {
+//        return userRepo.findAllUser();
+//    }
+//
+//    public Flux<UserEntity> customFindAllProjection() {
+//        return userRepo.findAllUserProjection();
+//    }
 
     public Mono<UserEntity> createUser(UserEntity user) {
         return userRepo.save(user);
     }
 
-    public Mono<UserEntity> customCreateUser(UserEntity user) {
-        return userRepo.createUser(user);
-    }
+//    public Mono<UserEntity> customCreateUser(UserEntity user) {
+//        return userRepo.createUser(user);
+//    }
 
     public Mono<UserEntity> updateUser(UserEntity user) {
         return userRepo.save(user);
     }
 
-    public Mono<UserEntity> customUpdateUser(UserEntity user) {
-        return userRepo.updateUser(user);
-    }
+//    public Mono<UserEntity> customUpdateUser(UserEntity user) {
+//        return userRepo.updateUser(user);
+//    }
+//
+//    public Mono<UserEntity> customUpdateUserByUntyped(UserEntity user) {
+//        return userRepo.updateUserByUntyped(user);
+//    }
 
-    public Mono<UserEntity> customUpdateUserByUntyped(UserEntity user) {
-        return userRepo.updateUserByUntyped(user);
-    }
+//    public Mono<Void> deleteUser(Long uid) {
+//        return userRepo.delete(uid);
+//    }
 
-    public Mono<Void> deleteUser(UserEntity user) {
-        return userRepo.delete(user);
-    }
-
-    public Mono<Void> customDeleteUser(long id) {
-        return userRepo.removeUser(id);
-    }
+//    public Mono<Void> customDeleteUser(long id) {
+//        return userRepo.removeUser(id);
+//    }
 
 }
