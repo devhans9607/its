@@ -5,5 +5,5 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Mono;
 
 public interface UserRepository extends ReactiveCrudRepository<UserEntity, Long> /*, CustomUserRepository */ {
-//    Mono<UserEntity> findUserEntityByUid(Mono<Integer> uid);
+    Mono<UserEntity> findUserEntityByUid(int uid);
 }

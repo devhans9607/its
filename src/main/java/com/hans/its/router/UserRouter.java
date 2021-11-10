@@ -3,6 +3,8 @@ package com.hans.its.router;
 import com.hans.its.entity.UserEntity;
 import com.hans.its.handler.UserHandler;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -29,7 +31,7 @@ public class UserRouter {
     @RouterOperations(
             {
                     @RouterOperation(
-                            path = "/user",
+                            path = "/v1/user",
                             produces = {MediaType.APPLICATION_JSON_VALUE},
                             method = RequestMethod.POST,
                             beanClass = UserHandler.class,
@@ -84,15 +86,31 @@ public class UserRouter {
                                             description = "suc",
                                             content = @Content(schema = @Schema(implementation = UserEntity.class)))
                                     })
+                    ),
+                    @RouterOperation(
+                            path = "/v1/user/{uid}",
+                            produces = {MediaType.APPLICATION_JSON_VALUE},
+                            method = RequestMethod.GET,
+                            beanClass = UserHandler.class,
+                            beanMethod = "findByUid",
+                            operation = @Operation(
+                                    operationId = "findByUid",
+                                    responses = { @ApiResponse(
+                                            responseCode = "200",
+                                            description = "suc",
+                                            content = @Content(schema = @Schema(implementation = UserEntity.class)))
+                                    },
+                                    parameters = {@Parameter(in = ParameterIn.PATH, name = "uid")})
                     )
             }
     )
     RouterFunction<ServerResponse> route(UserHandler userHandler) {
         return RouterFunctions
-                .route(POST("/user"), userHandler::addUser)
+                .route(POST("/v1/user"), userHandler::addUser)
                 .andRoute(GET("/v1/test"), userHandler::test)
                 .andRoute(GET("/v1/users"), userHandler::allUsers)
                 .andRoute(GET("/v1/users2"), userHandler::allUsers2)
+                .andRoute(GET("/v1/user/{uid}"), userHandler::findByUid)
                 ;
     }
 }

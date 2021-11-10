@@ -35,8 +35,7 @@ public class UserHandler {
     }
 
     public Mono<ServerResponse> allUsers(ServerRequest request) {
-        Flux<UserEntity> users = userRepository.findAll();
-        return ok().contentType(APPLICATION_JSON).body(users, UserEntity.class);
+        return ok().contentType(APPLICATION_JSON).body(userRepository.findAll(), UserEntity.class);
     }
 
     public Mono<ServerResponse> allUsers2(ServerRequest request) {
@@ -62,8 +61,10 @@ public class UserHandler {
         }
     }
 
-//    public Mono<ServerResponse> findByUid(ServerRequest request) {
-//        return Mono.just(request.bodyToMono(UserEntity.class))
-//                .flatMap(v -> userRepository.findUserEntityByUid(v.ge))
-//    }
+    public Mono<ServerResponse> findByUid(ServerRequest request) {
+        int uid = Integer.parseInt(request.pathVariable("uid"));
+        return userRepository.findUserEntityByUid(uid)
+                .flatMap(user -> ok().contentType(APPLICATION_JSON).bodyValue(user))
+                .switchIfEmpty(ServerResponse.notFound().build());
+    }
 }
