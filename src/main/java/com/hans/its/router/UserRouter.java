@@ -101,6 +101,21 @@ public class UserRouter {
                                             content = @Content(schema = @Schema(implementation = UserEntity.class)))
                                     },
                                     parameters = {@Parameter(in = ParameterIn.PATH, name = "uid")})
+                    ),
+                    @RouterOperation(
+                            path = "/v1/user/{uid}",
+                            produces = {MediaType.APPLICATION_JSON_VALUE},
+                            method = RequestMethod.DELETE,
+                            beanClass = UserHandler.class,
+                            beanMethod = "removeUser",
+                            operation = @Operation(
+                                    operationId = "removeUser",
+                                    responses = { @ApiResponse(
+                                            responseCode = "200",
+                                            description = "suc",
+                                            content = @Content(schema = @Schema(implementation = Integer.class)))
+                                    },
+                                    parameters = {@Parameter(in = ParameterIn.PATH, name = "uid")})
                     )
             }
     )
@@ -111,6 +126,7 @@ public class UserRouter {
                 .andRoute(GET("/v1/users"), userHandler::allUsers)
                 .andRoute(GET("/v1/users2"), userHandler::allUsers2)
                 .andRoute(GET("/v1/user/{uid}"), userHandler::findByUid)
+                .andRoute(DELETE("/v1/user/{uid}"), userHandler::removeUser)
                 ;
     }
 }

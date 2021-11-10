@@ -17,6 +17,8 @@ import org.springframework.web.server.ServerWebInputException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.net.http.HttpResponse;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.server.ServerResponse.notFound;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
@@ -53,18 +55,24 @@ public class UserHandler {
                 .flatMap(entity -> ok().contentType(APPLICATION_JSON).bodyValue(entity));
     }
 
+    public Mono<ServerResponse> findByUid(ServerRequest request) {
+        int uid = Integer.parseInt(request.pathVariable("uid"));
+        return userRepository.findUserEntityByUid(uid)
+                .flatMap(user -> ok().contentType(APPLICATION_JSON).bodyValue(user))
+                .switchIfEmpty(ServerResponse.notFound().build());
+    }
+
+    public Mono<ServerResponse> removeUser(ServerRequest request) {
+        int uid = Integer.parseInt(request.pathVariable("uid"));
+        return userRepository.deleteUserEntityByUid(uid)
+                .flatMap(result -> result == 1 ? ok().build() : notFound().build());
+    }
+
     private void validate(UserEntity user) {
         Errors errors = new BeanPropertyBindingResult(user, UserEntity.class.getName());
         validator.validate(user, errors);
         if (errors.hasErrors()) {
             throw new ServerWebInputException(errors.toString());
         }
-    }
-
-    public Mono<ServerResponse> findByUid(ServerRequest request) {
-        int uid = Integer.parseInt(request.pathVariable("uid"));
-        return userRepository.findUserEntityByUid(uid)
-                .flatMap(user -> ok().contentType(APPLICATION_JSON).bodyValue(user))
-                .switchIfEmpty(ServerResponse.notFound().build());
     }
 }

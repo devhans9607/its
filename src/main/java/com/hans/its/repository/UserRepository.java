@@ -6,4 +6,5 @@ import reactor.core.publisher.Mono;
 
 public interface UserRepository extends ReactiveCrudRepository<UserEntity, Long> /*, CustomUserRepository */ {
     Mono<UserEntity> findUserEntityByUid(int uid);
+    Mono<Integer> deleteUserEntityByUid(int uid);
 }
