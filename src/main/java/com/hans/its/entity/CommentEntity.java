@@ -58,4 +58,5 @@ public class CommentEntity {
 
     @Column("is_deleted")
     private Boolean isDeleted;
+
 }

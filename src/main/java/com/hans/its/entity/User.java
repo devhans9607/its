@@ -1,35 +1,41 @@
-//package com.hans.its.entity;
-//
-//import lombok.AllArgsConstructor;
-//import lombok.Builder;
-//import lombok.Getter;
-//import lombok.NoArgsConstructor;
-//import org.springframework.data.annotation.CreatedDate;
-//import org.springframework.data.annotation.Id;
-//import org.springframework.data.annotation.LastModifiedDate;
-//import org.springframework.data.relational.core.mapping.Table;
-//
-//import java.time.LocalDateTime;
-//
-//@Getter
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Builder
-//@Table("users")
-//public class User {
-//
-//    @Id
-//    private Long id;
-//
-//    private String name;
-//
-//    private Integer age;
-//
-//    private String profilePictureUrl;
-//
-//    @LastModifiedDate
-//    private LocalDateTime updatedAt;
-//
-//    @CreatedDate
-//    private LocalDateTime createdAt;
-//}
+package com.hans.its.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hans.its.dto.ReqSignInDto;
+import lombok.*;
+
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
+
+@Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table("users")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class User {
+    @Id
+    @Column("uid")
+    private Integer uid;
+
+    @Column("userid")
+    private String userId;
+
+    @Column("pwd")
+    private String userPwd;
+
+    @Column("name")
+    private String name; //name 수저ㅏ
+
+    @Column("valid")
+    private Boolean valid;
+
+    @JsonIgnore
+    public User(ReqSignInDto dto) {
+
+    }
+}

@@ -1,6 +1,6 @@
 package com.hans.its.router;
 
-import com.hans.its.entity.UserEntity;
+import com.hans.its.entity.User;
 import com.hans.its.handler.UserHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -41,9 +41,9 @@ public class UserRouter {
                                     responses = { @ApiResponse(
                                             responseCode = "200",
                                             description = "suc",
-                                            content = @Content(schema = @Schema(implementation = UserEntity.class))),
+                                            content = @Content(schema = @Schema(implementation = User.class))),
                                     },
-                                    requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = UserEntity.class))))
+                                    requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = User.class))))
                     ),
                     @RouterOperation(
                             path = "/v1/users",
@@ -56,7 +56,7 @@ public class UserRouter {
                                     responses = { @ApiResponse(
                                             responseCode = "200",
                                             description = "suc",
-                                            content = @Content(schema = @Schema(implementation = UserEntity.class)))
+                                            content = @Content(schema = @Schema(implementation = User.class)))
                                     })
                     ),
                     @RouterOperation(
@@ -84,7 +84,7 @@ public class UserRouter {
                                     responses = { @ApiResponse(
                                             responseCode = "200",
                                             description = "suc",
-                                            content = @Content(schema = @Schema(implementation = UserEntity.class)))
+                                            content = @Content(schema = @Schema(implementation = User.class)))
                                     })
                     ),
                     @RouterOperation(
@@ -98,7 +98,7 @@ public class UserRouter {
                                     responses = { @ApiResponse(
                                             responseCode = "200",
                                             description = "suc",
-                                            content = @Content(schema = @Schema(implementation = UserEntity.class)))
+                                            content = @Content(schema = @Schema(implementation = User.class)))
                                     },
                                     parameters = {@Parameter(in = ParameterIn.PATH, name = "uid")})
                     ),
@@ -116,6 +116,21 @@ public class UserRouter {
                                             content = @Content(schema = @Schema(implementation = Integer.class)))
                                     },
                                     parameters = {@Parameter(in = ParameterIn.PATH, name = "uid")})
+                    ),
+                    @RouterOperation(
+                            path = "/v1/user/name/{name}",
+                            produces = {MediaType.APPLICATION_JSON_VALUE},
+                            method = RequestMethod.GET,
+                            beanClass = UserHandler.class,
+                            beanMethod = "queryTest",
+                            operation = @Operation(
+                                    operationId = "getByName query test",
+                                    responses = { @ApiResponse(
+                                            responseCode = "200",
+                                            description = "suc",
+                                            content = @Content(schema = @Schema(implementation = User.class)))
+                                    },
+                                    parameters = {@Parameter(in = ParameterIn.PATH, name = "name")})
                     )
             }
     )
@@ -127,6 +142,7 @@ public class UserRouter {
                 .andRoute(GET("/v1/users2"), userHandler::allUsers2)
                 .andRoute(GET("/v1/user/{uid}"), userHandler::findByUid)
                 .andRoute(DELETE("/v1/user/{uid}"), userHandler::removeUser)
+                .andRoute(GET("/v1/user/name/{name}"), userHandler::queryTest)
                 ;
     }
 }

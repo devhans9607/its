@@ -1,6 +1,6 @@
 package com.hans.its.service;
 
-import com.hans.its.entity.UserEntity;
+import com.hans.its.entity.User;
 import com.hans.its.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 public class UserService {
     private final UserRepository userRepo;
 
-    public Flux<UserEntity> findAll() {
+    public Flux<User> findAll() {
         return userRepo.findAll();
     }
 
@@ -26,7 +26,7 @@ public class UserService {
 //        return userRepo.findAllUserProjection();
 //    }
 
-    public Mono<UserEntity> createUser(UserEntity user) {
+    public Mono<User> createUser(User user) {
         return userRepo.save(user);
     }
 
@@ -34,7 +34,7 @@ public class UserService {
 //        return userRepo.createUser(user);
 //    }
 
-    public Mono<UserEntity> updateUser(UserEntity user) {
+    public Mono<User> updateUser(User user) {
         return userRepo.save(user);
     }
 

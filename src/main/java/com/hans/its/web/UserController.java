@@ -1,6 +1,6 @@
 package com.hans.its.web;
 
-import com.hans.its.entity.UserEntity;
+import com.hans.its.entity.User;
 import com.hans.its.service.UserService;
 //import io.swagger.annotations.Api;
 //import io.swagger.annotations.ApiOperation;
@@ -31,12 +31,12 @@ public class UserController {
 //    }
 //
     @PostMapping(value = "users", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<UserEntity> addUser(@RequestBody UserEntity user) {
+    public Mono<User> addUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
     @PutMapping(value = "users", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<UserEntity> editUser(@RequestBody UserEntity user) {
+    public Mono<User> editUser(@RequestBody User user) {
         return userService.updateUser(user);
     }
 
